@@ -51,14 +51,17 @@
 
 			let title = document.createElement('a');
 			title.classList.add('menu__title');
+			title.classList.add('pure-menu-heading');
 			title.innerHTML = this.data.title;
 
 			let list = document.createElement('ul');
 			list.classList.add('menu__list');
+			list.classList.add('pure-menu-list');
 
 			this.data.items.forEach(itemData => {
 				let item = document.createElement('li');
 				item.classList.add('menu__item');
+				item.classList.add('pure-menu-link');
 
 				item.innerHTML = itemData.anchor;
 				list.appendChild(item);

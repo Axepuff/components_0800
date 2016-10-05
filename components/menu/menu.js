@@ -1,105 +1,128 @@
-(function () {
+(function() {
 	'use strict';
 
+	/**
+	 * @class Menu
+	 * Компонента "Меню"
+	 */
 	class Menu {
 
 		/**
-		* Конструктор класс Menu
-		* @parm {Object} options
-		*/
-		constructor (options) {
-			this.el = options.el;
-			this.data = options.data;
+		 * @constructor
+		 * @param  {Object} opts
+		 */
+		constructor(opts) {
+			this.el = opts.el;
+			this.data = opts.data;
+			this.onPick = opts.onPick;
 
-			this._init();
+			this.render();
+
+			this.list = this.el.querySelector('.menu__list');
+			this.title = this.el.querySelector('.menu__title');
+
 			this._initEvents();
+		}
 
+		/**
+		 * Добавляем элемент меню
+		 * @param {Object} item
+		 */
+		addItem (item) {
+			this.data.items.push(item);
 			this.render();
 		}
 
-		_init () {
-			this.items = this.el.querySelectorAll('.menu__item');
-		}
-
 		/**
-		* Установка обработчиков событий 
-		*/
-		_initEvents () {
-			this.el.addEventListener('click', this._onCLick.bind(this));
-		}
-
-
-		/**
-		* Обработчик всех кликов по меню
-		* @param {MouseEvent} event
-		*/
-		_onCLick (event) {
-			event.preventDefault();
-			let target = event.target;
-
-			if (target.classList.contains('menu__title')) {
-				this.toggle();
-			}
-
-			if (target.classList.contains('menu__item')) {
-				this.toggleItem(event.target);
-			}
-		}
-
-		render () {
-			this.el.innerHTML = '';
-
-			let title = document.createElement('a');
-			title.classList.add('menu__title');
-			title.classList.add('pure-menu-heading');
-			title.innerHTML = this.data.title;
-
-			let list = document.createElement('ul');
-			list.classList.add('menu__list');
-			list.classList.add('pure-menu-list');
-
-			this.data.items.forEach(itemData => {
-				let item = document.createElement('li');
-				item.classList.add('menu__item');
-				item.classList.add('pure-menu-link');
-
-				item.innerHTML = itemData.anchor;
-				list.appendChild(item);
+		 * Удаляем пункт меню из данных
+		 * @param  {Object} removedItem
+		 */
+		removeItem (removedItem) {
+			this.data.items = this.data.items.filter((item, index) => {
+				return index !== removedItem.index;
 			});
+			this.render();
+		}
 
-			this.el.appendChild(title);
-			this.el.appendChild(list);
+		/**
+		 * Создаем HTML
+		 */
+		render () {
+			function generateItems (itmes) {
+				return itmes.map( (item, index) => {
+					return `
+						<li class="pure-menu-item" data-index="${index}">
+							<a class="pure-menu-link" href="${item.href}" data-action="pick">
+								${item.anchor}
+							</a>
+							<i class="close" data-action="remove"></i>	
+						</li>`;
+				}).join('');
+			}
+
+			this.el.innerHTML = `
+				<div class="menu pure-menu custom-restricted-width">
+					<span class="menu__title pure-menu-heading">
+						${this.data.title}
+					</span>
+					<ul class="menu__list pure-menu-list">
+						${generateItems(this.data.items)}
+					</ul>
+				</div>
+			`;
+		}
+
+		/**
+		* Удаления элемента меню
+		* @param  {HTMLElement} item
+		* @private
+		*/
+		_onRemoveClick(item) {
+			let index = parseInt(item.parentNode.dataset.index, 10);
+
+			this.removeItem({
+				index
+			});
 		}
 
 		/**
 		* Выбор элемента меню
-		* @param {HTMLElement} elem
+		* @param  {HTMLElement} item
 		*/
-		toggleItem (elem) {
-			elem.classList.toggle('menu__item_selected');
-			elem.style.color = elem.dataset.highlight;
+		_onPickClick(item) {
+			this.onPick(item);
 		}
 
 		/**
-		* Переключение состояния меню
+		* Развешиваем события
 		*/
-		toggle() {
-			this.el.classList.toggle('menu_close');
+		_initEvents() {
+			this.el.addEventListener('click', this._onClick.bind(this));
 		}
 
 		/**
-		* Получение данных о состоянии меню 
-		* @returns {Array}
+		* Клик в любую область меню
+		* @param {Event} event
+		* @private
 		*/
-		getData () {
-			return Array.prototype.filter.call(this.items, item => {
-				return item.classList.contains('menu__item_selected');
-			}).map(el => el.innerHTML);
+		_onClick(event) {
+			event.preventDefault();
+			let item = event.target;
+
+			switch (item.dataset.action) {
+				case 'remove':
+				this._onRemoveClick(item);
+				break;
+
+				case 'pick':
+				this._onPickClick(item);
+				break;
+			}
 		}
+
 	}
 
-	// export
+	// Export
 	window.Menu = Menu;
 
-
-})();
+})(window);

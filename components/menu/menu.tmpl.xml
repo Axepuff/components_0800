@@ -1,0 +1,18 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+	<div class="menu pure-menu custom-restricted-width">
+		<span class="menu__title pure-menu-heading">
+			<fest:value>data.title</fest:value>
+		</span>
+		<ul class="menu__list pure-menu-list">
+			
+			<fest:for iterate="data.items" value="item" index="i">
+				<li class="pure-menu-item" data-index="{i}">
+					<a class="pure-menu-link" href="{item.href}" data-action="pick">
+						<fest:value>item.anchor</fest:value>
+					</a>
+					<i class="close" data-action="remove"></i>
+				</li>
+			</fest:for>
+		</ul>
+	</div>
+</fest:template>

@@ -6,17 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "jshint components/**/*.js",
-    "dev": "static ."
+    "dev": "static .",
+    "fest": "fest-build --dir=components"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iketari/components_0800.git"
   },
-  "keywords": ["learn"],
+  "keywords": [
+    "learn"
+  ],
   "author": "Artsiom Mezin <iketari@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/iketari/components_0800/issues"
   },
-  "homepage": "https://github.com/iketari/components_0800#readme"
+  "homepage": "https://github.com/iketari/components_0800#readme",
+  "devDependencies": {
+    "fest": "^0.12.1"
+  }
 }

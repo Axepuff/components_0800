@@ -1,6 +1,9 @@
 (function() {
 	'use strict';
 
+	// import
+	let template = window.fest['menu/menu.tmpl'];
+
 	/**
 	 * @class Menu
 	 * Компонента "Меню"
@@ -15,6 +18,8 @@
 			this.el = opts.el;
 			this.data = opts.data;
 			this.onPick = opts.onPick;
+
+			this.template = template;
 
 			this.render();
 
@@ -48,28 +53,7 @@
 		 * Создаем HTML
 		 */
 		render () {
-			function generateItems (itmes) {
-				return itmes.map( (item, index) => {
-					return `
-						<li class="pure-menu-item" data-index="${index}">
-							<a class="pure-menu-link" href="${item.href}" data-action="pick">
-								${item.anchor}
-							</a>
-							<i class="close" data-action="remove"></i>	
-						</li>`;
-				}).join('');
-			}
-
-			this.el.innerHTML = `
-				<div class="menu pure-menu custom-restricted-width">
-					<span class="menu__title pure-menu-heading">
-						${this.data.title}
-					</span>
-					<ul class="menu__list pure-menu-list">
-						${generateItems(this.data.items)}
-					</ul>
-				</div>
-			`;
+			this.el.innerHTML = this.template(this.data);
 		}
 
 		/**

@@ -35,6 +35,7 @@
 
 	new Form({
 		el: document.querySelector('.js-form'),
+		data: {},
 		onSubmit (form) {
 			menu.addItem({
 				href: form.getField('href').value,

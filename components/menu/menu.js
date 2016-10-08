@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	// import
-	let template = window.fest['menu/menu.tmpl'];
+	//import
+	let _template = window.fest['menu/menu.tmpl'];
 
 	/**
 	 * @class Menu
@@ -14,17 +14,12 @@
 		 * @constructor
 		 * @param  {Object} opts
 		 */
-		constructor(opts) {
-			this.el = opts.el;
-			this.data = opts.data;
-			this.onPick = opts.onPick;
-
-			this.template = template;
+		constructor ({el, data, onPick}) { // деструктуризация объекта
+			this.el = el;
+			this.data = data;
+			this.onPick = onPick;
 
 			this.render();
-
-			this.list = this.el.querySelector('.menu__list');
-			this.title = this.el.querySelector('.menu__title');
 
 			this._initEvents();
 		}
@@ -53,7 +48,7 @@
 		 * Создаем HTML
 		 */
 		render () {
-			this.el.innerHTML = this.template(this.data);
+			this.el.innerHTML = _template(this.data);
 		}
 
 		/**
@@ -61,7 +56,7 @@
 		* @param  {HTMLElement} item
 		* @private
 		*/
-		_onRemoveClick(item) {
+		_onremove(item) {
 			let index = parseInt(item.parentNode.dataset.index, 10);
 
 			this.removeItem({
@@ -73,7 +68,7 @@
 		* Выбор элемента меню
 		* @param  {HTMLElement} item
 		*/
-		_onPickClick(item) {
+		_onpick(item) {
 			this.onPick(item);
 		}
 
@@ -93,15 +88,12 @@
 			event.preventDefault();
 			let item = event.target;
 
-			switch (item.dataset.action) {
-				case 'remove':
-				this._onRemoveClick(item);
-				break;
-
-				case 'pick':
-				this._onPickClick(item);
-				break;
+			try {
+				this['_on' + item.dataset.action](item);
+			} catch (e) {
+				throw new Error(`Метод ${item.dataset.action} не определен!`);
 			}
+
 		}
 
 	}

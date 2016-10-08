@@ -4,13 +4,12 @@
 			<fest:value>data.title</fest:value>
 		</span>
 		<ul class="menu__list pure-menu-list">
-			
-			<fest:for iterate="data.items" value="item" index="i">
-				<li class="pure-menu-item" data-index="{i}">
+			<fest:for iterate="data.items" index="index" value="item">
+				<li class="pure-menu-item" data-index="{index}">
 					<a class="pure-menu-link" href="{item.href}" data-action="pick">
 						<fest:value>item.anchor</fest:value>
 					</a>
-					<i class="close" data-action="remove"></i>
+					<i class="close" data-action="remove" />
 				</li>
 			</fest:for>
 		</ul>

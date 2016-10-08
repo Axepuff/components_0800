@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "jshint components/**/*.js",
-    "dev": "static .",
-    "fest": "fest-build --dir=components"
+    "fest": "fest-build --dir=components",
+    "dev": "static ."
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/iketari/components_0800#readme",
   "devDependencies": {
-    "fest": "^0.12.1"
+    "fest": "^0.12.1",
+    "node-static": "0.7.9"
   }
 }

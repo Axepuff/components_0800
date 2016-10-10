@@ -1,0 +1,21 @@
+{
+	"title": "JSON title",
+	"items": [
+		{
+			"href": "https://ya.ru",
+			"anchor": "yandex.ru"
+		},
+		{
+			"href": "https://mail.ru",
+			"anchor": "mail.ru"
+		},
+		{
+			"href": "https://google.ru",
+			"anchor": "google.ru"
+		},
+		{
+			"href": "https://yahoo.ru",
+			"anchor": "yahoo.ru"
+		}
+	]
+}

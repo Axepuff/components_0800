@@ -19,9 +19,15 @@
 			this.data = data;
 			this.onPick = onPick;
 
-			this.render();
+			if (data) {
+				this.render();
+			}
 
 			this._initEvents();
+		}
+
+		setData (data) {
+			this.data = data;
 		}
 
 		/**

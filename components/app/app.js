@@ -4,6 +4,11 @@
 	//import
 	let Menu = window.Menu;
 	let Form = window.Form;
+	let Model = window.Model;
+
+	let menuModel = new Model({
+		resource: '/data/menu.json'
+	});
 
 	let menu = new Menu({
 		el: document.querySelector('.js-menu'),
@@ -12,29 +17,16 @@
 		},
 		onRemove () {
 
-		},
-		data: {
-			title: 'SINGLE PAGE APPLICATION',
-			items: [
-				{
-					href: 'https://vk.com',
-					anchor: 'vk.com'
-				},
-				{
-					href: 'https://ok.ru',
-					anchor: 'ok.ru'
-				},
-				{
-					href: 'https://yahoo.com',
-					anchor: 'yahoo.com'
-				},
-				{
-					href: 'https://yandex.ru',
-					anchor: 'yandex.ru'
-				}
-			]
 		}
 	});
+
+
+	menuModel.on('update', () => {
+		menu.setData(menuModel.getData());
+		menu.render();
+	});
+
+	menuModel.fetch();
 
 	let form = new Form({
 		el: document.querySelector('.js-form')

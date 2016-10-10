@@ -2,6 +2,8 @@
 	<div class="menu pure-menu custom-restricted-width">
 		<span class="menu__title pure-menu-heading">
 			<fest:value>data.title</fest:value>
+			<fest:space/>
+			v(<fest:value>data.version</fest:value>)
 		</span>
 		<ul class="menu__list pure-menu-list">
 			<fest:for iterate="data.items" index="index" value="item">

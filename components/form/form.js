@@ -66,10 +66,10 @@
 		 */
 		trigger (name, data) {
 			let widgetEvent = new CustomEvent(name, {
-      			bubbles: true,
-      			// detail - стандартное свойство CustomEvent для произвольных данных
-      			detail: data
-    		});
+				bubbles: true,
+				// detail - стандартное свойство CustomEvent для произвольных данных
+				detail: data
+			});
 
     		this.el.dispatchEvent(widgetEvent);
 		}

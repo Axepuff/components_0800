@@ -1,40 +1,35 @@
-(function () {
- 	'use strict';
+//import
+import {Menu} from '../menu/menu.js';
+import {Form} from '../form/form.js';
+import {Model} from '../model/model.js';
 
-	//import
-	let Menu = window.Menu;
-	let Form = window.Form;
-	let Model = window.Model;
+let menuModel = new Model({
+	resource: 'https://javascriptru.firebaseio.com/menu/-KTwZ6jxjeFF141AKtna.json'
+});
 
-	let menuModel = new Model({
-		resource: 'https://javascriptru.firebaseio.com/menu/-KTwZ6jxjeFF141AKtna.json'
-	});
+let menu = new Menu({
+	el: document.querySelector('.js-menu'),
+	onPick (item) {
+		console.log(item);
+	},
+	onRemove () {
 
-	let menu = new Menu({
-		el: document.querySelector('.js-menu'),
-		onPick (item) {
-			console.log(item);
-		},
-		onRemove () {
-
-		}
-	});
+	}
+});
 
 
-	menuModel.on('update', () => {
-		menu.setData(menuModel.getData());
-		menu.render();
-	});
+menuModel.on('update', () => {
+	menu.setData(menuModel.getData());
+	menu.render();
+});
 
-	menuModel.fetch();
+menuModel.fetch();
 
-	let form = new Form({
-		el: document.querySelector('.js-form')
-	});
+let form = new Form({
+	el: document.querySelector('.js-form')
+});
 
-	form.on('add', event => {
-		menu.addItem(event.detail);
-		menuModel.save(menu.getData());
-	});
-
-})();
+form.on('add', event => {
+	menu.addItem(event.detail);
+	menuModel.save(menu.getData());
+});

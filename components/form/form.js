@@ -1,6 +1,3 @@
-(function () {
-	'use strict';
-
 	//import
 	let _template = window.fest['form/form.tmpl'];
 
@@ -93,7 +90,4 @@
 
 	}
 
-
-	//export
-	window.Form = Form;
-})();
+	export {Form}

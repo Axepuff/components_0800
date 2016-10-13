@@ -3,7 +3,7 @@
 
 	class Model {
 		constructor ({resource, data = {}}) {
-			this._resourse = resource;
+			this._resource = resource;
 			this._data = data;
 			this._eventsHandlers = {};
 		}
@@ -45,13 +45,18 @@
 		}
 
 		fetch () {
-			this._makeRequest('GET', this._resourse, this.setData.bind(this));
+			this._makeRequest('GET', this._resource, this.setData.bind(this));
+		}
+
+		save (data) {
+			this.setData(data);
+			this._makeRequest('PUT', this._resource, null);
 		}
 
 
-		_makeRequest (method, resource, callback) {
+		_makeRequest (method, url, callback) {
 			let xhr = new XMLHttpRequest();
-			xhr.open(method, resource, true);
+			xhr.open(method, url, true);
 
 			xhr.onreadystatechange = function () {
 
@@ -59,13 +64,18 @@
 					return;
 				}
 
-				if (xhr.status === 200) {
+				if (xhr.status === 200 && callback !== null) {
 					callback(JSON.parse(xhr.responseText));
 				}
 
 			}
 
-			xhr.send();
+			if (method === 'PUT') {
+				xhr.send(JSON.stringify(this.getData()));
+			} else {
+				xhr.send();
+			}
+			
 		}
 	}
 

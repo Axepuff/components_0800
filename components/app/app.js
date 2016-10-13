@@ -7,7 +7,7 @@
 	let Model = window.Model;
 
 	let menuModel = new Model({
-		resource: '/data/menu.json'
+		resource: 'https://javascriptru.firebaseio.com/menu/-KTwZ6jxjeFF141AKtna.json'
 	});
 
 	let menu = new Menu({
@@ -34,6 +34,7 @@
 
 	form.on('add', event => {
 		menu.addItem(event.detail);
+		menuModel.save(menu.getData());
 	});
 
 })();
